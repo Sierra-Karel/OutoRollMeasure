@@ -1,0 +1,8 @@
+{
+  "PollingInterval": 2,
+  "Pulses": 10000,
+  "Diameter": 16,
+  "Scale": 1,
+  "Unit": "M",
+  "IpAddress": "192.168.1.250"
+}
