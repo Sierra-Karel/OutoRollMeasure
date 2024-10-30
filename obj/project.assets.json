@@ -1429,7 +1429,7 @@
         }
       }
     },
-    "net8.0/win-x86": {
+    "net8.0/win-x64": {
       "Avalonia/11.0.10": {
         "type": "package",
         "dependencies": {
@@ -1510,7 +1510,7 @@
       "Avalonia.Angle.Windows.Natives/2.1.0.2023020321": {
         "type": "package",
         "native": {
-          "runtimes/win-x86/native/av_libglesv2.dll": {}
+          "runtimes/win-x64/native/av_libglesv2.dll": {}
         }
       },
       "Avalonia.BuildServices/0.0.29": {
@@ -1735,7 +1735,7 @@
           "lib/net6.0/_._": {}
         },
         "native": {
-          "runtimes/win-x86/native/libHarfBuzzSharp.dll": {}
+          "runtimes/win-x64/native/libHarfBuzzSharp.dll": {}
         }
       },
       "IOLinkNET.Conversion/0.2.5": {
@@ -2187,7 +2187,7 @@
           "lib/net6.0/_._": {}
         },
         "native": {
-          "runtimes/win-x86/native/libSkiaSharp.dll": {}
+          "runtimes/win-x64/native/libSkiaSharp.dll": {}
         }
       },
       "System.Buffers/4.3.0": {
@@ -6795,15 +6795,15 @@
         "warn": true,
         "downloadDependencies": [
           {
-            "name": "Microsoft.AspNetCore.App.Runtime.win-x86",
+            "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
             "version": "[8.0.5, 8.0.5]"
           },
           {
-            "name": "Microsoft.NETCore.App.Host.win-x86",
+            "name": "Microsoft.NETCore.App.Host.win-x64",
             "version": "[8.0.5, 8.0.5]"
           },
           {
-            "name": "Microsoft.NETCore.App.Runtime.win-x86",
+            "name": "Microsoft.NETCore.App.Runtime.win-x64",
             "version": "[8.0.5, 8.0.5]"
           }
         ],
@@ -6816,9 +6816,22 @@
       }
     },
     "runtimes": {
-      "win-x86": {
+      "win-x64": {
         "#import": []
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "El paquete \"System.Text.Json\" 6.0.0 tiene una vulnerabilidad de gravedad alta conocida, https://github.com/advisories/GHSA-8g4q-xg66-9fp4",
+      "libraryId": "System.Text.Json",
+      "targetGraphs": [
+        "net8.0",
+        "net8.0/win-x64"
+      ]
+    }
+  ]
 }

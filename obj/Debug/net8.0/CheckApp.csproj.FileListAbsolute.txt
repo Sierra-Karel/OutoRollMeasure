@@ -259,3 +259,4 @@
 /Users/isaias/Documents/CheckApp/obj/Debug/net8.0/CheckApp.genruntimeconfig.cache
 /Users/isaias/Documents/CheckApp/obj/Debug/net8.0/ref/CheckApp.dll
 /Users/isaias/Documents/CheckApp/bin/Debug/net8.0/config.json
+/Users/isaias/Documents/CheckApp/obj/Debug/net8.0/CheckApp.sourcelink.json

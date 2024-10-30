@@ -469,3 +469,4 @@
 /Users/isaias/Documents/CheckApp/obj/Release/net8.0/win-x64/CheckApp.genruntimeconfig.cache
 /Users/isaias/Documents/CheckApp/obj/Release/net8.0/win-x64/ref/CheckApp.dll
 /Users/isaias/Documents/CheckApp/bin/Release/net8.0/win-x64/config.json
+/Users/isaias/Documents/CheckApp/obj/Release/net8.0/win-x64/CheckApp.sourcelink.json

@@ -59,6 +59,7 @@
                     <MenuItem  Header="Escalar valor" Click="OnScaleClick"/>
                     <MenuItem  Header="Intervalo de muestreo" Click="OnIntervalClick"/>
                 </MenuItem>
+                <MenuItem Header="Cambiar Color" Click="OnChangeColorClick"/>
             </MenuItem>
             <MenuItem Foreground="White" Header="Visualizar" Name="VisualizarMenuItem">
                 <MenuItem Header="Visualizar cuentas de encoder" Click="VisualizarClick"/>
@@ -67,7 +68,7 @@
 
         <!-- RPM Status positioned absolutely -->
         <Canvas Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0">
-            <TextBlock Name="RpmStatus" Text="RPM: 0" FontSize="16" Foreground="White" Canvas.Left="10" Canvas.Top="0"/>
+            <TextBlock x:Name="RPMText" Name="RpmStatus" Text="RPM: 0" FontSize="16" Foreground="White" Canvas.Left="10" Canvas.Top="0"/>
         </Canvas>
 
         <!-- Connection Status -->
@@ -76,23 +77,23 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Name="ConnectionStatus" Text="Desconectado" FontSize="16" Foreground="Red" Grid.Column="1" Margin="0,0,10,0"/>
+            <TextBlock  x:Name="ConnectionText"  Name="ConnectionStatus" Text="Desconectado" FontSize="16" Foreground="Red" Grid.Column="1" Margin="0,0,10,0"/>
         </Grid>
 
         <!-- Content Panel -->
         <Grid Name="ContentPanel" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <TextBlock Name="TotalDisplacement" Text="0.0 M" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" FontSize="137" Width="700" Height="250" Foreground="#FFFFFF" Margin="10"/>
+            <TextBlock x:Name="TotalText" Name="TotalDisplacement" Text="0.0 M" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" FontSize="137" Width="700" Height="250" Foreground="#FFFFFF" Margin="10"/>
         </Grid>
 
         <!-- Configuration Summary -->
-        <TextBlock Name="ConfigSummary" Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="500" Foreground="#FFFFFF" FontSize="15" Margin="10" Padding="5"/>
+        <TextBlock x:Name="ConfigText" Name="ConfigSummary" Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="500" Foreground="#FFFFFF" FontSize="15" Margin="10" Padding="5"/>
 
         <!-- Modal Overlays -->
         <!-- Change IP Modal -->
-        <Canvas Name="ChangeIpModal" Background="#80000000" IsVisible="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Border Background="#34495E" BorderBrush="#FFFFFF" BorderThickness="2" Padding="20" Width="450" Height="150" CornerRadius="10">
+ <Canvas Name="ChangeIpModal" Background="#80000000" IsVisible="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Border x:Name="ChangeIpModalBorder" Background="#34495E" BorderBrush="#FFFFFF" BorderThickness="2" Padding="20" Width="450" Height="150" CornerRadius="10">
                 <StackPanel>
-                    <TextBlock Text="Ingresa la IP a la que te quieres conectar:" FontSize="16" Margin="0,0,0,10" Foreground="#FFFFFF"/>
+                    <TextBlock x:Name="ChangeIpModalText" Text="Ingresa la IP a la que te quieres conectar:" FontSize="16" Margin="0,0,0,10" Foreground="#FFFFFF"/>
                     <TextBox Name="IpInput" Width="400" Margin="0,0,0,10" Text="192.168.1.250"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button Content="Conectar" Background="White" Foreground="#34495E" Margin="0,0,10,0" Click="OnConnectButtonClick"/>
@@ -104,9 +105,9 @@
 
         <!-- Pulses Modal -->
         <Canvas Name="PulsesModal" Background="#80000000" IsVisible="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Border Background="#34495E" BorderBrush="#FFFFFF" BorderThickness="2" Padding="20" Width="450" Height="150" CornerRadius="10">
+            <Border x:Name="PulsesModalBorder" Background="#34495E" BorderBrush="#FFFFFF" BorderThickness="2" Padding="20" Width="450" Height="150" CornerRadius="10">
                 <StackPanel>
-                    <TextBlock Text="Pulsos por revolución:" FontSize="16" Margin="0,0,0,10" Foreground="#FFFFFF"/>
+                    <TextBlock x:Name="PulsesModalText" Text="Pulsos por revolución:" FontSize="16" Margin="0,0,0,10" Foreground="#FFFFFF"/>
                     <TextBox Name="PulsesInput" Width="400" Margin="0,0,0,10"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button Content="Aceptar" Click="OnAcceptPulsesClick" Background="White" Foreground="#34495E" Margin="0,0,10,0"/>
@@ -118,9 +119,9 @@
 
         <!-- Diameter Modal -->
         <Canvas Name="DiameterModal" Background="#80000000" IsVisible="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Border Background="#34495E" BorderBrush="#FFFFFF" BorderThickness="2" Padding="20" Width="450" Height="150" CornerRadius="10">
+            <Border x:Name="DiameterModalBorder" Background="#34495E" BorderBrush="#FFFFFF" BorderThickness="2" Padding="20" Width="450" Height="150" CornerRadius="10">
                 <StackPanel>
-                    <TextBlock Text="Ingrese el diámetro de la rueda en centímetros:" FontSize="16" Margin="0,0,0,10" Foreground="#FFFFFF"/>
+                    <TextBlock x:Name="DiameterModalText" Text="Ingrese el diámetro de la rueda en centímetros:" FontSize="16" Margin="0,0,0,10" Foreground="#FFFFFF"/>
                     <TextBox Name="DiameterInput" Width="400" Margin="0,0,0,10"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button Content="Aceptar" Click="OnAcceptDiameterClick" Background="White" Foreground="#34495E" Margin="0,0,10,0"/>
@@ -132,9 +133,9 @@
 
         <!-- Unit Modal -->
         <Canvas Name="UnitModal" Background="#80000000" IsVisible="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Border Background="#34495E" BorderBrush="#FFFFFF" BorderThickness="2" Padding="20" Width="450" Height="150" CornerRadius="10">
+            <Border x:Name="UnitModalBorder" Background="#34495E" BorderBrush="#FFFFFF" BorderThickness="2" Padding="20" Width="450" Height="150" CornerRadius="10">
                 <StackPanel>
-                    <TextBlock Text="Unidades:" FontSize="16" Margin="0,0,0,10" Foreground="#FFFFFF"/>
+                    <TextBlock x:Name="UnitModalText" Text="Unidades:" FontSize="16" Margin="0,0,0,10" Foreground="#FFFFFF"/>
                     <ComboBox Name="UnitSelector" Width="400" Margin="0,0,0,10" SelectedIndex="1">
                         <ComboBoxItem Content="CM"/>
                         <ComboBoxItem Content="M"/>
@@ -150,9 +151,9 @@
 
         <!-- Scale Modal -->
         <Canvas Name="ScaleModal" Background="#80000000" IsVisible="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Border Background="#34495E" BorderBrush="#FFFFFF" BorderThickness="2" Padding="20" Width="450" Height="150" CornerRadius="10">
+            <Border x:Name="ScaleModalBorder" Background="#34495E" BorderBrush="#FFFFFF" BorderThickness="2" Padding="20" Width="450" Height="150" CornerRadius="10">
                 <StackPanel>
-                    <TextBlock Text="Escalar valor:" FontSize="16" Margin="0,0,0,10" Foreground="#FFFFFF"/>
+                    <TextBlock x:Name="ScaleModalText" Text="Escalar valor:" FontSize="16" Margin="0,0,0,10" Foreground="#FFFFFF"/>
                     <TextBox Name="ScaleInput" Width="400" Margin="0,0,0,10" Text="1"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button Content="Aceptar" Click="OnAcceptScaleClick" Background="White" Foreground="#34495E" Margin="0,0,10,0"/>
@@ -164,9 +165,9 @@
 
         <!-- Interval Modal -->
         <Canvas Name="IntervalModal" Background="#80000000" IsVisible="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Border Background="#34495E" BorderBrush="#FFFFFF" BorderThickness="2" Padding="20" Width="450" Height="150" CornerRadius="10">
+            <Border x:Name="IntervalModalBorder" Background="#34495E" BorderBrush="#FFFFFF" BorderThickness="2" Padding="20" Width="450" Height="150" CornerRadius="10">
                 <StackPanel>
-                    <TextBlock Text="Intervalo (ms):" FontSize="16" Margin="0,0,0,10" Foreground="#FFFFFF"/>
+                    <TextBlock x:Name="IntervalModalText" Text="Intervalo (ms):" FontSize="16" Margin="0,0,0,10" Foreground="#FFFFFF"/>
                     <TextBox Name="IntervalInput" Width="400" Margin="0,0,0,10" Text="10000"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button Content="Aceptar" Click="OnAcceptIntervalClick" Background="White" Foreground="#34495E" Margin="0,0,10,0"/>
@@ -178,9 +179,9 @@
 
         <!-- Visualizar Modal -->
         <Canvas Name="VisualizarModal" Background="#80000000" IsVisible="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Border Background="#34495E" BorderBrush="#FFFFFF" BorderThickness="2" Padding="20" Width="450" Height="150" CornerRadius="10">
+            <Border x:Name="VisualizarModalBorder" Background="#34495E" BorderBrush="#FFFFFF" BorderThickness="2" Padding="20" Width="450" Height="150" CornerRadius="10">
                 <StackPanel>
-                    <TextBlock Text="Valor decimal:" FontSize="16" Margin="0,0,0,10" Foreground="#FFFFFF"/>
+                    <TextBlock x:Name="DecimalValueText2" Text="Valor decimal:" FontSize="16" Margin="0,0,0,10" Foreground="#FFFFFF"/>
                     <TextBlock Name="DecimalValueText" FontSize="24" Margin="0,0,0,10" Foreground="#FFFFFF"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button Content="Cerrar" Background="White" Foreground="#34495E" Click="OnCloseModalClick"/>
@@ -191,9 +192,9 @@
 
         <!-- Confirm Reset Modal -->
         <Canvas Name="ConfirmResetModal" Background="#80000000" IsVisible="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <Border Background="#34495E" BorderBrush="#FFFFFF" BorderThickness="2" Padding="20" Width="450" Height="150" CornerRadius="10">
+            <Border x:Name="ConfirmResetModalBorder" Background="#34495E" BorderBrush="#FFFFFF" BorderThickness="2" Padding="20" Width="450" Height="150" CornerRadius="10">
                 <StackPanel>
-                    <TextBlock Text="¿Está seguro de que desea resetear el valor decimal?" FontSize="16" Margin="0,0,0,10" Foreground="#FFFFFF"/>
+                    <TextBlock x:Name="ConfirmResetModalText" Text="¿Está seguro de que desea resetear el valor decimal?" FontSize="16" Margin="0,0,0,10" Foreground="#FFFFFF"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button Content="Sí" Click="OnConfirmResetClick" Background="White" Foreground="#34495E" Margin="0,0,10,0"/>
                         <Button Content="No" Click="OnCloseModalClick" Background="White" Foreground="#34495E"/>
@@ -201,5 +202,24 @@
                 </StackPanel>
             </Border>
         </Canvas>
+
+       <Canvas Name="ColorModal" Background="#80000000" IsVisible="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Border x:Name="ColorModalBorder" Background="#34495E" BorderBrush="#FFFFFF" BorderThickness="2" Padding="20" Width="450" Height="200" CornerRadius="10">
+                <StackPanel>
+                    <TextBlock x:Name="ColorModalText" Text="Ingrese un color de fondo (hexadecimal):" FontSize="16" Margin="0,0,0,10" Foreground="#FFFFFF"/>
+                    <TextBox Name="ColorInput" Width="400" Margin="0,0,0,10" Text="#34495E"/>
+                    
+                    <TextBlock x:Name="ColorTextLabel" Text="Ingrese un color de texto (hexadecimal):" FontSize="16" Margin="0,0,0,10" Foreground="#FFFFFF"/>
+                    <TextBox Name="TextColorInput" Width="400" Margin="0,0,0,10" Text="#FFFFFF"/>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Content="Aceptar" Click="OnAcceptColorClick" Background="White" Foreground="#34495E" Margin="0,0,10,0"/>
+                        <Button Content="Cerrar" Background="White" Foreground="#34495E" Click="OnCloseModalClick"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Canvas>
+
+
     </Grid>
 </Window>

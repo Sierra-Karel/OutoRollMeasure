@@ -67,15 +67,17 @@ namespace CheckApp
         private static extern IntPtr objc_msgSend(IntPtr receiver, IntPtr selector, int arg);
 
         private string configFilePath = "config.json"; // Ruta del archivo de configuración
-
-        public MainWindow()
+        private  SecondWindow _secondWindow;
+        public MainWindow(SecondWindow secondWindow)
         {
             InitializeComponent();
+            _secondWindow = secondWindow;
             LoadConfig(); // Cargar configuración al iniciar
             this.Opened += OnOpened;
             this.SizeChanged += OnSizeChanged;
             this.Closing += OnClosing; // Asegúrate de que OnClosing coincida con la firma correcta
             UpdateConfigSummary();
+            
         }
 
         private void SaveConfig()
@@ -87,31 +89,71 @@ namespace CheckApp
                 Diameter = diameter,
                 Scale = scale,
                 Unit = unit,
-                IpAddress = ipAddress
+                IpAddress = ipAddress,
+                BackgroundColor = this.Background.ToString(),
+                TextColor = ColorModalText.Foreground.ToString() 
             };
 
             string json = JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(configFilePath, json);
         }
 
-        private void LoadConfig()
-        {
-            if (File.Exists(configFilePath))
-            {
-                string json = File.ReadAllText(configFilePath);
-                var config = JsonSerializer.Deserialize<AppConfig>(json);
+    private void LoadConfig()
+{
+    if (File.Exists(configFilePath))
+    {
+        string json = File.ReadAllText(configFilePath);
+        var config = JsonSerializer.Deserialize<AppConfig>(json);
 
-                if (config != null)
-                {
-                    PollingInterval = config.PollingInterval;
-                    pulses = config.Pulses;
-                    diameter = config.Diameter;
-                    scale = config.Scale;
-                    unit = config.Unit;
-                    ipAddress = config.IpAddress;
-                }
-            }
+        if (config != null)
+        {
+            // Cargar la configuración de los parámetros
+            PollingInterval = config.PollingInterval;
+            pulses = config.Pulses;
+            diameter = config.Diameter;
+            scale = config.Scale;
+            unit = config.Unit;
+            ipAddress = config.IpAddress;
+
+            // Cargar el color de fondo y aplicarlo a la ventana principal y a los modales
+            var backgroundColorBrush = new SolidColorBrush(Color.Parse(config.BackgroundColor));
+            this.Background = backgroundColorBrush;  // Cambiar el fondo de la ventana principal
+            _secondWindow.Background= backgroundColorBrush;
+            // Aplicar el color de fondo a los modales
+            ColorModalBorder.Background = backgroundColorBrush;
+            ChangeIpModalBorder.Background = backgroundColorBrush;
+            PulsesModalBorder.Background = backgroundColorBrush;
+            DiameterModalBorder.Background = backgroundColorBrush;
+            UnitModalBorder.Background = backgroundColorBrush;
+            ScaleModalBorder.Background = backgroundColorBrush;
+            IntervalModalBorder.Background = backgroundColorBrush;
+            VisualizarModalBorder.Background = backgroundColorBrush;
+            ConfirmResetModalBorder.Background = backgroundColorBrush;
+
+            // Cargar el color del texto y aplicarlo a los textos en los modales
+            var textColorBrush = new SolidColorBrush(Color.Parse(config.TextColor));
+            ColorModalText.Foreground = textColorBrush;
+            ColorTextLabel.Foreground = textColorBrush;
+            ChangeIpModalText.Foreground = textColorBrush;
+            PulsesModalText.Foreground = textColorBrush;
+            DiameterModalText.Foreground = textColorBrush;
+            UnitModalText.Foreground = textColorBrush;
+            ScaleModalText.Foreground = textColorBrush;
+            IntervalModalText.Foreground = textColorBrush;
+            DecimalValueText2.Foreground = textColorBrush;
+            ConfirmResetModalText.Foreground = textColorBrush;
+            RPMText.Foreground = textColorBrush;
+            ConnectionText.Foreground = textColorBrush;
+            TotalText.Foreground = textColorBrush;
+            ConfigText.Foreground = textColorBrush;
+             _secondWindow.RPMText.Foreground = textColorBrush;
+            _secondWindow.ConnectionText.Foreground = textColorBrush;
+            _secondWindow.TotalText.Foreground = textColorBrush;
+            _secondWindow.ConfigText.Foreground = textColorBrush;
         }
+    }
+}
+
 
         private void OnOpened(object? sender, EventArgs e)
         {
@@ -234,6 +276,8 @@ namespace CheckApp
             ScaleModal.IsVisible = false;
             VisualizarModal.IsVisible = false;
             ConfirmResetModal.IsVisible = false;
+            ColorModal.IsVisible=false;
+            
         }
 
         private void OnCloseModalClick(object? sender, RoutedEventArgs e)
@@ -406,10 +450,15 @@ private void StartPolling(string url, string json)
                         totalDisplacement *= scale;
 
                         string displayText = $"{totalDisplacement:F2} {unit.ToLower()}";
-
+                        if (_secondWindow != null)
+                        {
+                            _secondWindow.TotalDisplacement.Text = displayText;
+                            _secondWindow.RpmStatus.Text = rpmText;
+                        }
                         AdjustFontSize(displayText);
 
                         TotalDisplacement.Text = displayText;
+                         
                     }
                     else
                     {
@@ -564,6 +613,12 @@ private void StartPolling(string url, string json)
             {
                 ConnectionStatus.Text = message;
                 ConnectionStatus.Foreground = color;
+                _secondWindow.ConnectionStatus.Foreground = color;
+                if (_secondWindow != null)
+                {
+                    _secondWindow.ConnectionStatus.Text = message;
+                    _secondWindow.Foreground = color;
+                }
             }
         }
 
@@ -640,8 +695,14 @@ private void StartPolling(string url, string json)
         {
             if (ConfigSummary != null)
             {
+                  Console.WriteLine("Hola");
                 ConfigSummary.Text = $"IP: {ipAddress}, Diametro: {diameter}, Pulsos: {pulses}, Unidad: {unit}, Escala: {scale}";
                 ConfigSummary.InvalidateVisual(); // Forzar actualización visual
+                if (_secondWindow != null)
+                {
+                    Console.WriteLine("Hola");
+                    _secondWindow.ConfigSummary.Text = $"Segunda pantalla: IP: {ipAddress}, Diametro: {diameter}, Pulsos: {pulses}, Unidad: {unit}, Escala: {scale}";
+                }
             }
         }
 
@@ -720,7 +781,104 @@ private void StartPolling(string url, string json)
                 textBox.Foreground = new SolidColorBrush(Colors.Black);
             }
         }
+          private void OnChangeColorClick(object? sender, RoutedEventArgs e)
+            {
+                ShowModal("ColorModal");
+                ColorInput.Text = Background.ToString(); // Mostrar el color actual
+                TextColorInput.Text = ColorModalText.Foreground.ToString();
+            }private void OnAcceptColorClick(object? sender, RoutedEventArgs e)
+{
+    string backgroundColorHex = ColorInput.Text;
+    string textColorHex = TextColorInput.Text;
+
+    // Validar si ambos colores ingresados son hexadecimales válidos
+    if ((backgroundColorHex.StartsWith("#") && (backgroundColorHex.Length == 7 || backgroundColorHex.Length == 9)) &&
+        (textColorHex.StartsWith("#") && (textColorHex.Length == 7 || textColorHex.Length == 9)))
+    {
+        try
+        {
+            // Cambiar el color de fondo
+            var backgroundColor = Color.Parse(backgroundColorHex);
+            var backgroundBrush = new SolidColorBrush(backgroundColor);
+            this.Background = backgroundBrush; // Cambiar el fondo de la ventana principal
+            _secondWindow.Background=backgroundBrush;
+
+            // Cambiar el color de texto
+            var textColor = Color.Parse(textColorHex);
+            var textBrush = new SolidColorBrush(textColor);
+
+            // Aplicar los cambios de color a los modales
+
+            // ColorModal
+            ColorModalBorder.Background = backgroundBrush;
+            ColorModalText.Foreground = textBrush;
+            ColorTextLabel.Foreground = textBrush;
+
+            // ChangeIpModal
+            ChangeIpModalBorder.Background = backgroundBrush;
+            ChangeIpModalText.Foreground = textBrush;
+
+            // PulsesModal
+            PulsesModalBorder.Background = backgroundBrush;
+            PulsesModalText.Foreground = textBrush;
+
+            // DiameterModal
+            DiameterModalBorder.Background = backgroundBrush;
+            DiameterModalText.Foreground = textBrush;
+
+            // UnitModal
+            UnitModalBorder.Background = backgroundBrush;
+            UnitModalText.Foreground = textBrush;
+
+            // ScaleModal
+            ScaleModalBorder.Background = backgroundBrush;
+            ScaleModalText.Foreground = textBrush;
+
+            // IntervalModal
+            IntervalModalBorder.Background = backgroundBrush;
+            IntervalModalText.Foreground = textBrush;
+
+            // VisualizarModal
+            VisualizarModalBorder.Background = backgroundBrush;
+            DecimalValueText2.Foreground = textBrush;
+
+            // ConfirmResetModal
+            ConfirmResetModalBorder.Background = backgroundBrush;
+            ConfirmResetModalText.Foreground = textBrush;
+
+            RPMText.Foreground = textBrush;
+            ConnectionText.Foreground = textBrush;
+            TotalText.Foreground = textBrush;
+            ConfigText.Foreground = textBrush;
+           
+            _secondWindow.RPMText.Foreground = textBrush;
+            _secondWindow.ConnectionText.Foreground = textBrush;
+            _secondWindow.TotalText.Foreground = textBrush;
+            _secondWindow.ConfigText.Foreground = textBrush;
+            
+
+            // Guardar los colores en la configuración (opcional)
+            SaveConfig();
+            UpdateConfigSummary();
+            ShowStatusMessage("", Brushes.Red);
+        }
+        catch
+        {
+            ShowStatusMessage("Color inválido.", Brushes.Red);
+        }
     }
+    else
+    {
+        ShowStatusMessage("Color inválido.", Brushes.Red);
+    }
+
+    HideAllModals();
+}
+
+
+
+    }
+  
 
     public class AppConfig
     {
@@ -730,6 +888,8 @@ private void StartPolling(string url, string json)
         public double Scale { get; set; }
         public string Unit { get; set; }
         public string IpAddress { get; set; }
+        public string BackgroundColor { get; set; } = "#34495E";
+         public string TextColor { get; set; } = "#FFFFFF"; 
     }
 
     public class ResponseData

@@ -22,3 +22,6 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [/Users/isaias/Documents/CheckApp/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/Users/isaias/Documents/CheckApp/SecondWindow.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

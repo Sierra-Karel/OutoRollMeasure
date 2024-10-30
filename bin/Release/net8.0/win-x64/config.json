@@ -4,5 +4,7 @@
   "Diameter": 16,
   "Scale": 1,
   "Unit": "M",
-  "IpAddress": "192.168.1.250"
+  "IpAddress": "192.168.1.250",
+  "BackgroundColor": "#fff4d03f",
+  "TextColor": "#ff0c0c0c"
 }
