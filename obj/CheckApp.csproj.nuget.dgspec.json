@@ -51,6 +51,10 @@
               "target": "Package",
               "version": "[11.0.10, )"
             },
+            "Avalonia.Diagnostics": {
+              "target": "Package",
+              "version": "[11.0.10, )"
+            },
             "Avalonia.Fonts.Inter": {
               "target": "Package",
               "version": "[11.0.10, )"
@@ -91,31 +95,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
-              "version": "[8.0.5, 8.0.5]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[8.0.5, 8.0.5]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Runtime.win-x64",
-              "version": "[8.0.5, 8.0.5]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
           "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.300/PortableRuntimeIdentifierGraph.json"
-        }
-      },
-      "runtimes": {
-        "win-x64": {
-          "#import": []
         }
       }
     }
